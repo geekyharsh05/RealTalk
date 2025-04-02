@@ -8,9 +8,7 @@
       "outputs": [
         "build/**",
         ".vercel/**",
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**"
+        "dist/**"
       ]
     },
     "test": {

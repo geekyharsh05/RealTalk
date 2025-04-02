@@ -1,9 +1,4 @@
-import mongoose, { connect } from 'mongoose';
-import dotenv from "dotenv";
-
-dotenv.config({
-  path: "./.env"
-})
+import mongoose from 'mongoose';
 
 export class Database {
   private static instance: Database;
@@ -44,16 +39,3 @@ export class Database {
   }
 
 }
-
-const startServer = async () => {
-  try {
-    const db = Database.getInstance();
-    await db.connect();
-
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-  }
-};
-
-startServer();

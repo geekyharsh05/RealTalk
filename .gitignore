@@ -9,4 +9,4 @@ dist-ssr
 .env
 .cache
 server/dist
-public/dist
+public/distD

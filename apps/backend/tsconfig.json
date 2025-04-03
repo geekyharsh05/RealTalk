@@ -2,8 +2,10 @@
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
     "experimentalDecorators": true,
-    "lib": ["ES2015"],
-    "outDir": "./dist"
+    "emitDecoratorMetadata": true,
+    "lib": ["ES2021"],
+    "outDir": "./dist",
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "exclude": ["node_modules"],
   "include": ["."]

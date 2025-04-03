@@ -2,8 +2,9 @@ import { log } from "@repo/logger";
 import { createServer } from "./server";
 import { Database } from "./lib/db";
 import "dotenv/config"
+import "reflect-metadata";
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT ?? 5001;
 const server = createServer();
 
 const startServer = async () => {
@@ -12,7 +13,7 @@ const startServer = async () => {
     await db.connect();
 
     server.listen(port, () => {
-      log(`api running on ${port}`);
+      log(`Server running on PORT: ${port}`);
     });
     
 

@@ -1,8 +1,9 @@
-import { prop, getModelForClass, modelOptions, Ref } from '@typegoose/typegoose';
+import { prop, getModelForClass, modelOptions, type Ref } from '@typegoose/typegoose';
 import { UserClass } from './user.model';
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 @modelOptions({ schemaOptions: { timestamps: true } })
-export class MessageClass {
+export class MessageClass extends TimeStamps {
   @prop({ required: true, ref: () => UserClass })
   public senderId!: Ref<UserClass>;
   
@@ -17,4 +18,6 @@ export class MessageClass {
 }
 
 export const Message = getModelForClass(MessageClass);
+export type MessageDocument = InstanceType<typeof MessageClass>;
+
 export default Message;

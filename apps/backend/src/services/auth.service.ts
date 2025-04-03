@@ -54,7 +54,7 @@ export class AuthService {
 
     // }
 
-    public async verifyAuth(req: Request, res: Response) {
+    public async verifyAuth(req: Request) {
         return req.user;
     }
 }

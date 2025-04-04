@@ -5,7 +5,7 @@ const router: Router = Router();
 const messageController = new MessageController();
 
 router.get("/users", messageController.getUsersForSidebar);
-// router.get("/:id", messageController.getMessages);
-// router.post("/send/:id", messageController.sendMessage);
+router.get("/:id", messageController.getMessages);
+router.post("/send/:id", messageController.sendMessage);
 
 export default router;

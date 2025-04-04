@@ -1,8 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
-import { config } from "dotenv";
+import dotenv from "dotenv";
 import { ApiError } from "../utils/apiError.util";
 
-config();
+dotenv.config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -12,7 +12,14 @@ cloudinary.config({
 
 export const uploadImageToCloudinary = async (image: string): Promise<string> => {
   try {
-    const uploadResult = await cloudinary.uploader.upload(image);
+    const isBase64Image = /^data:image\/[a-z]+;base64,/.test(image);
+    const imageToUpload = isBase64Image
+      ? image
+      : `data:image/jpeg;base64,${image}`;
+
+    const uploadResult = await cloudinary.uploader.upload(imageToUpload, {
+      folder: 'realtalk',
+    });
 
     return uploadResult.secure_url;
   } catch (error) {

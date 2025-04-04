@@ -25,25 +25,27 @@ export class AuthController {
     };
   });
 
-  public signOut: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
+  public signOut: RequestHandler = asyncHandler(async (_, res: Response) => {
     await this.authService.signOut(res);
     return {
       message: 'User signed out successfully'
     };
   });
 
-  // public updateProfile: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
-  //   const result = await this.authService.editProfile(req.body);
-  //   return {
-  //     message: 'User signed out successfully'
-  //   };
-  // });
-
-  public getUser: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
-    const result = await this.authService.verifyAuth(req, res);
+  public updateProfile: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
+    const userId = req.user._id;
+    const result = await this.authService.editProfile(req.body, userId);
     return {
-      message: 'User retrieved successfully'
+      message: 'User updated successfully',
+      ...result
     };
   });
 
+  public getUser: RequestHandler = asyncHandler(async (req: Request) => {
+    const result = await this.authService.verifyAuth(req);
+    return {
+      message: 'User retrieved successfully',
+      result
+    };
+  });
 }

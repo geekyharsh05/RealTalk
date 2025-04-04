@@ -1,11 +1,12 @@
 import { SignInInput, signInSchema, SignUpInput, signUpSchema } from "@repo/validators";
 import { validateSchema } from "../utils/validateSchema.util";
-import { AuthResponse } from "../types/response.types";
+import { AuthResponse, UpdateInput, UpdateResponse } from "../types/response.types";
 import User from "../models/user.model";
 import { ApiError } from "../utils/apiError.util";
 import { generateToken } from "../utils/generateToken.util";
 import type { Request, Response } from "express";
 import { formatUserResponse } from "../utils/format.util";
+import { uploadImageToCloudinary } from "../lib/cloudinary";
 
 export class AuthService {
     public async signUp(input: SignUpInput, res: Response): Promise<AuthResponse>  {
@@ -50,9 +51,27 @@ export class AuthService {
         return res.clearCookie("jwt");
     }
 
-    // public async editProfile(input) {
+    public async editProfile(input: UpdateInput, userId: string): Promise<UpdateResponse> {
+        if (!input.profilePic) {
+            throw new ApiError(400, "Profile pic is required");
+        }
 
-    // }
+        const imageUrl = await uploadImageToCloudinary(input.profilePic);
+
+        const updatedUser = await User.findByIdAndUpdate( 
+             userId, 
+             { profilePic: imageUrl }, { new: true } 
+            );
+    
+        if (!updatedUser) {
+            throw new ApiError(400, "User not found");
+        }
+    
+        return {
+            userId: updatedUser._id.toString(),
+            profilePic: updatedUser.profilePic as string,
+        };
+    }
 
     public async verifyAuth(req: Request) {
         return req.user;

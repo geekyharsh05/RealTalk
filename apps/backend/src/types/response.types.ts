@@ -11,4 +11,12 @@ export interface AuthResponse {
     token: string;
     user: UserResponse;
 }
-  
+
+export interface UpdateInput {
+    profilePic: string
+}
+
+export interface UpdateResponse {
+    userId: string;
+    profilePic: string
+}

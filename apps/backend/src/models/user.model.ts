@@ -1,7 +1,6 @@
 import { prop, getModelForClass, modelOptions, pre, DocumentType } from '@typegoose/typegoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import bcrypt from 'bcryptjs';
-import { Types } from 'mongoose';
 
 @pre<UserClass>('save', async function(next) {
   if (!this.isModified('password')) return next();
@@ -30,6 +29,6 @@ export class UserClass extends TimeStamps {
 }
 
 export const User = getModelForClass(UserClass);
-export type UserDocument = InstanceType<typeof UserClass>;
+export type UserDocument = DocumentType<UserClass>;
 
 export default User;

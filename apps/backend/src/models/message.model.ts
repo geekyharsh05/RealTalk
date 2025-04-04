@@ -1,4 +1,4 @@
-import { prop, getModelForClass, modelOptions, type Ref } from '@typegoose/typegoose';
+import { prop, getModelForClass, modelOptions, type Ref, DocumentType } from '@typegoose/typegoose';
 import { UserClass } from './user.model';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
@@ -18,6 +18,6 @@ export class MessageClass extends TimeStamps {
 }
 
 export const Message = getModelForClass(MessageClass);
-export type MessageDocument = InstanceType<typeof MessageClass>;
+export type MessageDocument = DocumentType<MessageClass>;
 
 export default Message;

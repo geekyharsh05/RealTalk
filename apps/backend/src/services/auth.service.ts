@@ -6,7 +6,7 @@ import { ApiError } from "../utils/apiError.util";
 import { generateToken } from "../utils/generateToken.util";
 import type { Request, Response } from "express";
 import { formatUserResponse } from "../utils/format.util";
-import { uploadImageToCloudinary } from "../lib/cloudinary";
+import { deleteImageFromCloudinary, uploadImageToCloudinary } from "../lib/cloudinary";
 
 export class AuthService {
     public async signUp(input: SignUpInput, res: Response): Promise<AuthResponse>  {
@@ -55,16 +55,27 @@ export class AuthService {
         if (!input.profilePic) {
             throw new ApiError(400, "Profile pic is required");
         }
-
+    
+        const existingUser = await User.findById(userId);
+        if (!existingUser) {
+            throw new ApiError(400, "User not found");
+        }
+    
+        // Delete the existing image if it exists
+        if (existingUser.profilePic) {
+            await deleteImageFromCloudinary(existingUser.profilePic);
+        }
+        
         const imageUrl = await uploadImageToCloudinary(input.profilePic);
-
-        const updatedUser = await User.findByIdAndUpdate( 
-             userId, 
-             { profilePic: imageUrl }, { new: true } 
-            );
+    
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { profilePic: imageUrl },
+            { new: true }
+        );
     
         if (!updatedUser) {
-            throw new ApiError(400, "User not found");
+            throw new ApiError(400, "User update failed");
         }
     
         return {

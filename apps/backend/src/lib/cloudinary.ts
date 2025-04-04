@@ -30,16 +30,19 @@ export const uploadImageToCloudinary = async (image: string): Promise<string> =>
 
 
 export const deleteImageFromCloudinary = async (imageUrl: string): Promise<void> => {
-    try {
-      const publicId = imageUrl.split('/').pop()?.split('.')[0];
-      if (!publicId) {
-        throw new ApiError(400, 'Invalid Cloudinary image URL');
-      }
-      
-      await cloudinary.uploader.destroy(publicId);
-    } catch (error) {
-      throw new ApiError(400, 'Image deletion failed');
+  try {
+    const matches = imageUrl.match(/upload\/(?:v\d+\/)?(.+)\.\w+$/);
+    if (!matches || !matches[1]) {
+      throw new ApiError(400, 'Invalid Cloudinary image URL');
     }
+
+    const publicId = matches[1];
+
+    await cloudinary.uploader.destroy(publicId);
+  } catch (error) {
+    console.error('Cloudinary deletion error:', error);
+    throw new ApiError(400, 'Image deletion failed');
+  }
 };
   
 export default cloudinary;

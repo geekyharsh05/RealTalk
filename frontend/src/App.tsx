@@ -13,6 +13,7 @@ import { useThemeStore } from "./store/theme-store";
 import { useIsMobile } from "./lib/isMobile";
 import NotFound from "./pages/not-found";
 import NetworkStatusAlert from "./pages/network-status-alert";
+import CookieConsent from "./components/cookie-consent";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -36,6 +37,7 @@ function App() {
     <div data-theme={theme}>
       <Navbar />
       <NetworkStatusAlert />
+      <CookieConsent isLoggedIn={!!authUser} />
 
       <Routes>
         <Route

@@ -14,6 +14,9 @@
   "jest": {
     "preset": "@repo/jest-presets/node"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "@repo/logger": "workspace:*",
     "@repo/validators": "workspace:*",

@@ -11,6 +11,8 @@ import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { useThemeStore } from "./store/theme-store";
 import { useIsMobile } from "./lib/isMobile";
+import NotFound from "./pages/not-found";
+import NetworkStatusAlert from "./pages/network-status-alert";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
@@ -36,7 +38,8 @@ function App() {
   return (
     <div data-theme={theme}>
       <Navbar />
-
+      <NetworkStatusAlert />
+      
       <Routes>
         <Route
           path="/"
@@ -55,6 +58,7 @@ function App() {
           path="/profile"
           element={authUser ? <ProfilePage /> : <Navigate to="/signin" />}
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Toaster

@@ -10,10 +10,16 @@ import { useAuthStore } from "./store/auth-store";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { useThemeStore } from "./store/theme-store";
+import { useIsMobile } from "./lib/isMobile";
 
 function App() {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  useEffect(() => {
+    console.log("Online users in component:", onlineUsers);
+  }, [onlineUsers]);
+  
   const { theme } = useThemeStore();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     checkAuth();
@@ -28,7 +34,7 @@ function App() {
   }
 
   return (
-    <div ata-theme={theme}>
+    <div data-theme={theme}>
       <Navbar />
 
       <Routes>
@@ -51,7 +57,54 @@ function App() {
         />
       </Routes>
 
-      <Toaster />
+      <Toaster
+        position={isMobile ? "top-center" : "bottom-right"}
+        reverseOrder={false}
+        gutter={8}
+        toastOptions={{
+          duration: 5000,
+          removeDelay: 1000,
+          style: {
+            background: "#2a2a2a", // Darker background for better contrast
+            color: "#ffffff", // White text for better readability
+            borderRadius: "8px",
+            padding: "10px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+          },
+          success: {
+            duration: 3000,
+            style: {
+              background: "#28a745", // Green success background
+              color: "#ffffff",
+            },
+            iconTheme: {
+              primary: "#ffffff",
+              secondary: "#28a745",
+            },
+          },
+          error: {
+            duration: 4000,
+            style: {
+              background: "#dc3545", // Red error background
+              color: "#ffffff",
+            },
+            iconTheme: {
+              primary: "#ffffff",
+              secondary: "#dc3545",
+            },
+          },
+          loading: {
+            style: {
+              background: "#ffc107", // Yellow loading background
+              color: "#000000",
+            },
+            iconTheme: {
+              primary: "#000000",
+              secondary: "#ffc107",
+            },
+          },
+        }}
+      />
     </div>
   );
 }

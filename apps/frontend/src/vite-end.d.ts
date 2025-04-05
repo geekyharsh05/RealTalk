@@ -1,7 +1,7 @@
 interface ImportMetaEnv {
-    MODE: string; 
+  MODE: string;
 }
 
 interface ImportMeta {
-    readonly env: ImportMetaEnv;
+  readonly env: ImportMetaEnv;
 }

@@ -5,7 +5,8 @@ import { AxiosError } from "axios";
 import { SignInInput, SignUpInput } from "@repo/validators";
 import { API } from "../lib/axios";
 
-const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
+const BASE_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
 
 export async function handleApiRequest<T>(
   apiCall: () => Promise<T>,
@@ -15,7 +16,7 @@ export async function handleApiRequest<T>(
     loading?: string;
     success?: string;
     error?: string;
-  }
+  },
 ): Promise<T> {
   setLoading(true);
 
@@ -24,7 +25,9 @@ export async function handleApiRequest<T>(
       .then((res) => res)
       .catch((error: AxiosError<{ message: string }>) => {
         const errMsg =
-          error.response?.data?.message || customMessages?.error || "Something went wrong";
+          error.response?.data?.message ||
+          customMessages?.error ||
+          "Something went wrong";
         throw new Error(errMsg);
       })
       .finally(() => {
@@ -34,7 +37,7 @@ export async function handleApiRequest<T>(
       loading: customMessages?.loading || "Loading...",
       success: customMessages?.success || successMessage,
       error: (err) => err.message || "Error occurred",
-    }
+    },
   );
 
   return toastPromise;
@@ -87,7 +90,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const response = await handleApiRequest(
       () => API.post("/auth/signup", data),
       (loading) => set({ isSigningUp: loading }),
-      "Account created successfully"
+      "Account created successfully",
     );
     set({ authUser: response.data });
     get().connectSocket();
@@ -97,7 +100,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const response = await handleApiRequest(
       () => API.post("/auth/signin", data),
       (loading) => set({ isSigningIn: loading }),
-      "Signed in successfully"
+      "Signed in successfully",
     );
     set({ authUser: response.data });
     await useAuthStore.getState().checkAuth();
@@ -108,7 +111,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     await handleApiRequest(
       () => API.post("/auth/signout"),
       () => {},
-      "Signed out successfully"
+      "Signed out successfully",
     );
     set({ authUser: null });
     get().disconnectSocket();
@@ -122,7 +125,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       {
         loading: "Updating profile...",
         error: "Failed to update profile",
-      }
+      },
     );
     set({ authUser: response.data });
     await useAuthStore.getState().checkAuth();
@@ -133,7 +136,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     if (!authUser || socket?.connected) return;
 
     const newSocket = io(BASE_URL, {
-      query: { userId: authUser.result._id},
+      query: { userId: authUser.result._id },
     });
 
     set({ socket: newSocket });

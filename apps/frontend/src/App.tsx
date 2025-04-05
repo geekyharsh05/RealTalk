@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     console.log("Online users in component:", onlineUsers);
   }, [onlineUsers]);
-  
+
   const { theme } = useThemeStore();
   const isMobile = useIsMobile();
 

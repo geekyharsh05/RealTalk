@@ -32,7 +32,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 
 app.get("/status", (_, res) => {
@@ -46,7 +46,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ error: "Something broke!" });
 });
 
-
 const startServer = async () => {
   try {
     const db = Database.getInstance();
@@ -55,7 +54,6 @@ const startServer = async () => {
     server.listen(port, () => {
       log(`🚀 Server running on http://localhost:${port}`);
     });
-
   } catch (error) {
     console.error("❌ Failed to start server:", error);
     process.exit(1);

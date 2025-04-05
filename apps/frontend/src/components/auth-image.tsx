@@ -23,8 +23,12 @@ const AuthImagePattern = ({ title, subtitle }: AuthImagePatternProps) => {
             </div>
           ))}
         </div>
-        <h2 className="text-2xl font-bold mb-4 font-stretch-semi-expanded">{title}</h2>
-        <p className="text-base-content/60 font-stretch-extra-expanded">{subtitle}</p>
+        <h2 className="text-2xl font-bold mb-4 font-stretch-semi-expanded">
+          {title}
+        </h2>
+        <p className="text-base-content/60 font-stretch-extra-expanded">
+          {subtitle}
+        </p>
       </div>
     </div>
   );

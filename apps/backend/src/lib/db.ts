@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export class Database {
   private static instance: Database;
@@ -15,27 +15,25 @@ export class Database {
   public async connect(): Promise<void> {
     try {
       const uri = process.env.DATABASE_URL;
-      
+
       if (!uri) {
-        throw new Error('DATABASE_URL is not defined in environment variables');
+        throw new Error("DATABASE_URL is not defined in environment variables");
       }
 
       await mongoose.connect(uri);
-      
-      console.log('Successfully connected to MongoDB');
 
-      mongoose.connection.on('error', (err) => {
-        console.error('MongoDB connection error:', err);
+      console.log("Successfully connected to MongoDB");
+
+      mongoose.connection.on("error", (err) => {
+        console.error("MongoDB connection error:", err);
       });
 
-      mongoose.connection.on('disconnected', () => {
-        console.warn('MongoDB connection disconnected');
+      mongoose.connection.on("disconnected", () => {
+        console.warn("MongoDB connection disconnected");
       });
-
     } catch (error) {
-      console.error('Error connecting to MongoDB:', error);
+      console.error("Error connecting to MongoDB:", error);
       throw error;
     }
   }
-
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import AuthRoutes from "./auth.route"
-import MessageRoutes from "./message.route"
+import AuthRoutes from "./auth.route";
+import MessageRoutes from "./message.route";
 import { isAuthenticated } from "../middleware/auth.middleware";
 
 const router: Router = Router();

@@ -63,7 +63,6 @@ const SignInPage = () => {
                 />
               </div>
               {errors.email && (
-
                 <p className="text-error text-sm mt-1">
                   {errors.email.message}
                 </p>

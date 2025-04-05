@@ -145,7 +145,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ socket: newSocket });
 
     newSocket.on("getOnlineUsers", (userIds) => {
-      console.log("Received online users:", userIds);
       set({ onlineUsers: userIds });
     });
 

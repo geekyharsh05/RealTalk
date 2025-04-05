@@ -15,10 +15,7 @@ import NotFound from "./pages/not-found";
 import NetworkStatusAlert from "./pages/network-status-alert";
 
 function App() {
-  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
-  useEffect(() => {
-    console.log("Online users in component:", onlineUsers);
-  }, [onlineUsers]);
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
   const { theme } = useThemeStore();
   const isMobile = useIsMobile();

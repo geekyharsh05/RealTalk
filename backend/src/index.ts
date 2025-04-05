@@ -29,6 +29,7 @@ app.use(
       const allowedOrigins = [
         "http://localhost:5173",
         "https://realtalkprod.netlify.app",
+        "https://realtalk.theharsh.xyz"
       ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);

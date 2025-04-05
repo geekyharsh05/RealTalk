@@ -1,6 +1,7 @@
 import User from "../models/user.model";
 import Message from "../models/message.model";
 import { uploadImageToCloudinary } from "../lib/cloudinary";
+import { getReceiverSocketId, io } from "../lib/socket";
 
 export class MessageService {
     public async fetchUsersForSidebar(loggedInUserId: string) {
@@ -25,7 +26,14 @@ export class MessageService {
         text,
         image: imageUrl,
       });
-  
-      return await newMessage.save();
+
+      await newMessage.save();
+      
+      const receiverSocketId = getReceiverSocketId(receiverId);
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("newMessage", newMessage);
+      }
+
+      return newMessage; 
     }
 }

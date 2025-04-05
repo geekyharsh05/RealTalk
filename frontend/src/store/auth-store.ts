@@ -6,7 +6,10 @@ import { SignInInput, SignUpInput } from "@geekyharsh/realtalk";
 import { API } from "../lib/axios";
 
 const BASE_URL =
-  import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5001"
+    : "https://realtalk-prod.onrender.com";
+
 
 export async function handleApiRequest<T>(
   apiCall: () => Promise<T>,

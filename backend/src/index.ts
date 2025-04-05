@@ -7,12 +7,12 @@ import dotenv from "dotenv";
 import "reflect-metadata";
 import Routes from "./routes/index";
 import { Database } from "./lib/db";
-import { app, server } from "./lib/socket.js";
-import limiter from "./utils/rateLimiter.util.js";
-import path from "path";
+import { app, server } from "./lib/socket";
+import limiter from "./utils/rateLimiter.util";
+
+dotenv.config();
 
 const port = process.env.PORT ?? 5001;
-dotenv.config();
 
 app.use(helmet());
 app.use(limiter);
@@ -37,15 +37,6 @@ app.use(
     credentials: true,
   }),
 );
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-  app.get("*", (_, res: Response) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-  });
-}
-
 
 app.get("/status", (_, res) => {
   return res.json({ ok: true });

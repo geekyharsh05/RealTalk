@@ -28,7 +28,7 @@ app.use(
     origin: function (origin, callback) {
       const allowedOrigins = [
         "http://localhost:5173",
-        "https://realtalk-prod.vercel.app",
+        "https://realtalkprod.netlify.app",
       ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);

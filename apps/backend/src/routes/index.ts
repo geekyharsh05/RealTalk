@@ -6,6 +6,6 @@ import { isAuthenticated } from "../middleware/auth.middleware";
 const router: Router = Router();
 
 router.use("/auth", AuthRoutes);
-router.use("/message", isAuthenticated, MessageRoutes);
+router.use("/messages", isAuthenticated, MessageRoutes);
 
 export default router;

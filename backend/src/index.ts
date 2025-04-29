@@ -9,10 +9,8 @@ import Routes from "./routes/index";
 import { Database } from "./lib/db";
 import { app, server } from "./lib/socket";
 import limiter from "./utils/rateLimiter.util";
-import job from "./lib/cron";
 
 dotenv.config();
-job.start();
 
 const port = process.env.PORT ?? 5001;
 
